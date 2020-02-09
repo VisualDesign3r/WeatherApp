@@ -38,6 +38,7 @@ function renderList(){
       $('#today').append(`<h5>Temperature: ${Math.round((response.main.temp - 273.15)*1.8+32)} F`)
       $('#today').append(`<h5>Humidity: ${response.main.humidity}`)
       $('#today').append(`<h5>Wind Speed: ${response.wind.speed}`)
+      $('#today').append(`<h3>5-Day Forecast</3>`)
 
       $.ajax({
         url: `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`,
@@ -46,13 +47,17 @@ function renderList(){
     .then(function(data){
         let forward = Math.floor((24-hour)/3)
         $('#forecast').empty()
+        // $('#forecast').append(`<h3>5-Day Forecast</h3>`)
+
         for(let i =forward;i<data.list.length;i+=8){
             console.log(data.list[i])
-            $('#forecast').append(`<div class='col-2' style='margin:auto; background-color:blue; color:white'>
+            $('#forecast').append(`<div class='col-2' style='margin:auto; padding:5px; background-color:#4863A0; border-radius:5px;
+            color:white'>
             <h6>${data.list[i].dt_txt}</h6>
-            <h6>Temperature: ${Math.round((data.list[i].main.temp -273.15)*1.8+32)} F</h6>
+            <h6>Temp: ${Math.round((data.list[i].main.temp -273.15)*1.8+32)} F</h6>
             <h6>Humidity: ${data.list[i].main.humidity}</h6>
             </div>`)
+
         }
     })
     .catch(function(err){
